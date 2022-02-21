@@ -11,21 +11,31 @@ struct map {
     int height;
 };
 
-void drawCircle(map &m, int diameter, int x, int ax, int ay) {
+/**
+ * m = map object
+ * diameter = diameter of circle to draw
+ * x = x coordinate of circle
+ * y = y coordinate of circle
+ * */
+void drawCircle(map &m, int diameter, int x, int y) {
     int radius = diameter / 2;
+    int lx = x - radius;
 
     // y = sqrt(r^2 - x^2)
     for (int i = 0; i < diameter; i++) {
-        int xi = x + i;
-        int y = std::sqrt(std::pow(radius, 2) - std::pow(i - radius, 2));
-        m.map[xi + (ax + y) * m.width] = 0xFF;
-        m.map[xi + (ax - y) * m.width] = 0xFF;
-        m.map[(ay + y) + xi * m.width] = 0xFF;
-        m.map[(ay - y) + xi * m.width] = 0xFF;
+        int xi = lx + i;
+        int ty = std::sqrt(std::pow(radius, 2) - std::pow(i - radius, 2));
+        m.map[xi + (y + ty) * m.width] = 0xFF;
+        m.map[xi + (y - ty) * m.width] = 0xFF;
+        m.map[(x + ty) + xi * m.width] = 0xFF;
+        m.map[(x - ty) + xi * m.width] = 0xFF;
     }
 }
 
+void drawCircleWeight(map &m, int diameter, int x, int ax, int ay);
+
 map drawHoopSkirt(int waist, int height, int thickness = 1) {
+    // Pixel perfect drawing will be fucked by odd numbers
     waist -= waist % 2;
     height -= height % 2;
 
@@ -35,8 +45,10 @@ map drawHoopSkirt(int waist, int height, int thickness = 1) {
     m.height = w;
     m.map.resize(w * w, 0);
     
-    drawCircle(m, waist, w / 2 - waist / 2, w / 2, w / 2);
-    drawCircle(m, waist + height * 2, 0, w / 2, w / 2);
+    // drawCircle(m, waist, w / 2 - waist / 2, w / 2, w / 2);
+    // drawCircle(m, waist + height * 2, 0, w / 2, w / 2);
+    drawCircle(m, waist, w / 2, w / 2);
+    drawCircle(m, waist + height * 2, w / 2, w / 2);
 
     return m;
 }
