@@ -26,16 +26,16 @@ void drawCircle(map &m, int diameter, int x, int y, int weight) {
     for (int i = 0; i < diameter; i++) {
         int xi = lx + i;
         int ty = std::round(std::sqrt(std::pow(radius, 2) - std::pow(i - radius, 2)));
-        for (int w = 0; w < weight; w++) {
+        for (int w = -weight + 1; w < weight; w++) {
             m.map[xi + (y + ty + w) * m.width] = 0xFF;
             m.map[xi + (y - ty - w) * m.width] = 0xFF;
             m.map[(x + ty + w) + xi * m.width] = 0xFF;
             m.map[(x - ty - w) + xi * m.width] = 0xFF;
 
-            m.map[xi + (y + ty - w) * m.width] = 0xFF;
-            m.map[xi + (y - ty + w) * m.width] = 0xFF;
-            m.map[(x + ty - w) + xi * m.width] = 0xFF;
-            m.map[(x - ty + w) + xi * m.width] = 0xFF;
+            // m.map[xi + (y + ty - w) * m.width] = 0xFF;
+            // m.map[xi + (y - ty + w) * m.width] = 0xFF;
+            // m.map[(x + ty - w) + xi * m.width] = 0xFF;
+            // m.map[(x - ty + w) + xi * m.width] = 0xFF;
         }
     }
 }
