@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <cmath>
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
@@ -24,7 +25,7 @@ void drawCircle(map &m, int diameter, int x, int y) {
     // y = sqrt(r^2 - x^2)
     for (int i = 0; i < diameter; i++) {
         int xi = lx + i;
-        int ty = std::sqrt(std::pow(radius, 2) - std::pow(i - radius, 2));
+        int ty = std::round(std::sqrt(std::pow(radius, 2) - std::pow(i - radius, 2)));
         m.map[xi + (y + ty) * m.width] = 0xFF;
         m.map[xi + (y - ty) * m.width] = 0xFF;
         m.map[(x + ty) + xi * m.width] = 0xFF;
@@ -34,6 +35,8 @@ void drawCircle(map &m, int diameter, int x, int y) {
 
 void drawCircleWeight(map &m, int diameter, int x, int y, int weight) {
     drawCircle(m, diameter, x, y);
+
+    weight--;
 
     for (int i = 1; i <= weight; i++) {
         drawCircle(m, diameter - i * 2, x, y);
@@ -55,7 +58,7 @@ map drawHoopSkirt(int waist, int height, int thickness = 1) {
     // drawCircle(m, waist, w / 2 - waist / 2, w / 2, w / 2);
     // drawCircle(m, waist + height * 2, 0, w / 2, w / 2);
 
-    drawCircleWeight(m, waist, w / 2, w / 2, 3);
+    drawCircleWeight(m, waist, w / 2, w / 2, 2);
     drawCircleWeight(m, waist + height * 2 - 2 * 2, w / 2, w / 2, 2);
 
     return m;
