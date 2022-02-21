@@ -54,15 +54,15 @@ map drawHoopSkirt(int waist, int height, int thickness = 1) {
     // drawCircle(m, waist, w / 2 - waist / 2, w / 2, w / 2);
     // drawCircle(m, waist + height * 2, 0, w / 2, w / 2);
 
-    drawCircle(m, waist, w / 2, w / 2, 2);
-    drawCircle(m, waist + height * 2 - 2 * 2, w / 2, w / 2, 2);
+    drawCircle(m, waist, w / 2, w / 2, thickness);
+    drawCircle(m, waist + height * 2 - thickness * 2, w / 2, w / 2, thickness);
 
     return m;
 }
 
 
 int main() {
-    map m = drawHoopSkirt(100, 300, 1);
+    map m = drawHoopSkirt(100, 300, 5);
 
     stbi_write_bmp("test.bmp", m.width, m.height, 1, (const void *)m.map.data());
 
