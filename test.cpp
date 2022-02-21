@@ -32,7 +32,14 @@ void drawCircle(map &m, int diameter, int x, int y) {
     }
 }
 
-void drawCircleWeight(map &m, int diameter, int x, int ax, int ay);
+void drawCircleWeight(map &m, int diameter, int x, int y, int weight) {
+    drawCircle(m, diameter, x, y);
+
+    for (int i = 1; i <= weight; i++) {
+        drawCircle(m, diameter - i * 2, x, y);
+        drawCircle(m, diameter + i * 2, x, y);
+    }
+}
 
 map drawHoopSkirt(int waist, int height, int thickness = 1) {
     // Pixel perfect drawing will be fucked by odd numbers
@@ -47,8 +54,9 @@ map drawHoopSkirt(int waist, int height, int thickness = 1) {
     
     // drawCircle(m, waist, w / 2 - waist / 2, w / 2, w / 2);
     // drawCircle(m, waist + height * 2, 0, w / 2, w / 2);
-    drawCircle(m, waist, w / 2, w / 2);
-    drawCircle(m, waist + height * 2, w / 2, w / 2);
+
+    drawCircleWeight(m, waist, w / 2, w / 2, 3);
+    drawCircleWeight(m, waist + height * 2 - 2 * 2, w / 2, w / 2, 2);
 
     return m;
 }
